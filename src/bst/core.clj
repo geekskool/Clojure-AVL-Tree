@@ -60,6 +60,7 @@
    (nil? right) left
    :else (let [min-value (min? right)]
            (Node. min-value left (-remove right min-value)))))
+
 (declare height?)
 (defn remove-balance [{:keys [key left right] :as tree} value]
   (let [new-tree (-remove tree value)]
@@ -70,10 +71,8 @@
      (and (< (height? new-tree) -1) (<= (height? (:right new-tree)) 0)) (left-rotate new-tree)
      (and (< (height? new-tree) -1) (> (height? (:right new-tree)) 0)) (left-rotate (Node. (:key new-tree) (:left new-tree) (right-rotate (:right new-tree)))))))
 
-(declare height?)
-
 (defn height-factor [{:keys [key left right] :as tree}]
-  (- (if (nil? left) 0 (inc (height? left))) (if (nil? right) 0 (inc (height? right)))))
+  (- (if (nil? left) 0 (height? left)) (if (nil? right) 0 (height? right))))
 
 (defn height? [{:keys [key left right] :as tree}]
   (if (and (nil? left) (nil? right))
@@ -92,11 +91,11 @@
     (concat [key] (preorder-traversal left) (preorder-traversal right))))
 
 (defn adding []
-  (def tree (to-tree '(1 2 3 4 5 6 7 8)))
+  (def tree (to-tree '(1 2 3 4 5 6 7 8 9 10)))
   ;; (println (java.util.Objects/hashCode tree))
   ;(def tree2 (insert-into-tree tree 100))
   (def tree2 (remove-balance tree 10))
-  (println (inorder-traversal tree))
-  (println "Preorder " (preorder-traversal tree))
-  (println (height-factor tree)))
+  (println "After removal "(preorder-traversal tree2))
+  (println "Inorder " (inorder-traversal tree))
+  (println (height? tree)))
 

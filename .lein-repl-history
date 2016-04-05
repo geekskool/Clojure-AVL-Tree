@@ -1,0 +1,13 @@
+()
+(exit)
+(run-tes
+)
+(exi
+0
+)
+(run-test 'bst.core)
+(run-tests)
+(a-test)\
+/
+(a-test)
+Testing
